@@ -7,6 +7,7 @@ TODO: Move into single-module distribution if src-layout is unnecessary.
 """
 
 import numpy as np
+from __init__ import logger
 from typing import Optional
 from pathlib import Path
 
@@ -20,6 +21,7 @@ class SpectrumData(object):
         true (functionality to be implemented); Otherwise just parses 
         single file as provided by path.
         """
+        logger.info("Spectrum Data initialisation has been called.")
         
         if path and data:
             raise Exception("Both data and path supplied. Choose either one or the other.")
@@ -58,6 +60,9 @@ class SpectrumData(object):
         elif data:
             self.parsed_data = self.parseData(data)
             self.spectrum = self.parseSpectrum(self.parsed_data)
+
+    def __createLogger(self):
+        self.logger = logging.getLogger(__name__)
 
     def parseFile(self, path: Path):
         with open(path, mode = 'r') as f:  # ASCII vs Binary support?
